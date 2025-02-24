@@ -1,0 +1,424 @@
+import streamlit as st
+import time
+import pandas as pd
+import random
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+# Function to load the Welcome Page
+def welcome_page():
+    st.markdown("### 🚢 The Great Shipping Escape: A Data-Driven Adventure")
+    st.markdown("""
+    Global Logistics Inc. is facing a crisis. A rogue AI has scrambled data, threatening global supply chains. Solve its challenges and save the company!
+    """)
+    if st.button("Start Game"):
+        st.session_state.current_room = "room_1"
+        st.session_state.start_time = time.time()
+        st.session_state.time_left = 300
+        st.session_state.hint_used = False
+        st.rerun()
+
+room1_background = """
+    <style>
+    .room1-page {
+        background-image: url("https://images.unsplash.com/photo-1530533718754-001d2668365a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .room1-title {
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+    }
+    .room1-text {
+        font-size: 16px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    </style>
+"""
+# Function for Room 1: Descriptive Statistics - The Manifest Mishap
+def room_1():
+    st.title("Room 1: Descriptive Statistics – The Manifest Mishap")
+    st.markdown(room1_background, unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="room1-page">
+            <div class="room1-title">🚢 Room 1: Descriptive Statistics – The Manifest Mishap</div>
+            <div class="room1-text">
+                <h3>📋 Objective</h3>
+                <p>
+                    The rogue AI, LogiX, has corrupted the cargo manifests, scrambling the weight data. Your task is to analyze the dataset using descriptive statistics, identify anomalies, and unlock the next room.
+                </p>
+                <p>
+                    <strong>LogiX's Message:</strong> "Welcome, human. You think you can outsmart me? Prove your worth by identifying the anomalies in the cargo data. Fail, and the supply chain collapses."
+                </p>
+                <h3>📋 Challenges</h3>
+                <ul>
+                    <li>Calculate mean, median, and mode to detect abnormal cargo weights.</li>
+                    <li>Use standard deviation to identify outliers in the shipments.</li>
+                    <li>Apply percentiles to compare shipments and detect any unusual trends.</li>
+                </ul>
+                <p>
+                    <strong>Reward:</strong> Successfully solving the challenges will grant you a <strong>5-digit passcode</strong> to use in Room 3.
+                </p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Load dataset
+    df = pd.read_csv("ship_data.csv")
+
+    # Questions pool
+    questions_pool = [
+        ("What is the mode weight of the cargo? (Use the 'Weight' column)", df["Weight"].mode()[0]),
+        ("What is the mean weight of the cargo (rounded to 2 decimal places)? (Use the 'Weight' column)", round(df["Weight"].mean(), 2)),
+        ("How many outliers are there in the dataset? (Use the 'Weight' column)", sum((df["Weight"] < (df["Weight"].quantile(0.25) - 1.5 * (df["Weight"].quantile(0.75) - df["Weight"].quantile(0.25)))) | 
+                          (df["Weight"] > (df["Weight"].quantile(0.75) + 1.5 * (df["Weight"].quantile(0.75) - df["Weight"].quantile(0.25))))),
+        ("What is the median weight of the cargo? (Use the 'Weight' column)", df["Weight"].median())),
+        ("What is the standard deviation of the cargo weight? (Use the 'Weight' column)", round(df["Weight"].std(), 2)),
+        ("What is the 25th percentile of cargo weight? (Use the 'Weight' column)", df["Weight"].quantile(0.25)),
+        ("What is the 75th percentile of cargo weight? (Use the 'Weight' column)", df["Weight"].quantile(0.75)),
+        ("What is the range of cargo weight? (Use the 'Weight' column)", df["Weight"].max() - df["Weight"].min())
+    ]
+
+    # Initialize session state for selected questions
+    if "selected_questions" not in st.session_state:
+        st.session_state.selected_questions = random.sample(questions_pool, 3)
+
+    # Display dataset
+    st.write("### 📦 **Ship Data Overview**")
+    st.dataframe(df)
+
+    # Display descriptive summary
+    st.write("### 📊 **Descriptive Summary of Cargo Weights**")
+    descriptive_stats = df["Weight"].describe().to_frame()
+    descriptive_stats.loc["Mode"] = df["Weight"].mode()[0]
+    descriptive_stats.loc["Range"] = df["Weight"].max() - df["Weight"].min()
+    IQR = df["Weight"].quantile(0.75) - df["Weight"].quantile(0.25)
+    outliers = sum((df["Weight"] < (df["Weight"].quantile(0.25) - 1.5 * IQR)) | 
+                    (df["Weight"] > (df["Weight"].quantile(0.75) + 1.5 * IQR)))
+    descriptive_stats.loc["Outliers"] = outliers
+    st.write(descriptive_stats)
+
+    # Timer logic
+    current_time = time.time()
+    time_elapsed = current_time - st.session_state.start_time
+    st.session_state.time_left = max(300 - time_elapsed, 0)
+
+    # Display live countdown timer
+    timer_placeholder = st.empty()
+    with timer_placeholder:
+        st.write(f"### ⏳ **Time Left:** {int(st.session_state.time_left // 60)} min {int(st.session_state.time_left % 60)} sec")
+
+    # Add a progress bar for the timer
+    progress_bar = st.progress(1.0)  # Initialize progress bar at 100%
+    progress = st.session_state.time_left / 300  # Calculate progress (0 to 1)
+    progress_bar.progress(progress)
+
+    # Check if time is up
+    if st.session_state.time_left <= 0:
+        st.error("⏳ **Time's up!** The rogue AI has locked the system. Try again! 🚨")
+        st.session_state.selected_questions = random.sample(questions_pool, 3)
+        st.session_state.start_time = time.time()
+        st.session_state.time_left = 300
+        st.rerun()
+
+    # Display questions
+    st.write("### 🕵️‍♂️ **Solve These Challenges:**")
+    answers = []
+    for i, (question, correct_answer) in enumerate(st.session_state.selected_questions):
+        # Allow user input without automatic rounding
+        answers.append(st.number_input(question, key=f"answer_{i}", step=0.01))  # Unique key for each question
+
+    # Hint system
+    st.write("### 💡 **Hint System**")
+    if not st.session_state.hint_used:
+        st.write("You can use **1 hint** during the game. Choose wisely!")
+        hint_question = st.selectbox(
+            "Choose a question to get a hint:",
+            [q for q, _ in st.session_state.selected_questions],
+            index=0,
+            key="hint_question"
+        )
+        if st.button("Get Hint"):
+            st.session_state.hint_used = True
+            # Find the selected question and provide a hint
+            for i, (question, correct_answer) in enumerate(st.session_state.selected_questions):
+                if question == hint_question:
+                    if "mode" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** The mode is the most frequently occurring value in the dataset. Look for the weight that appears the most.")
+                    elif "mean" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** The mean is the average of all weights. Add up all the weights and divide by the number of cargo items.")
+                    elif "outliers" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** Outliers are values that are significantly higher or lower than the rest. Use the IQR method to find them.")
+                        st.write(f"💡 **IQR Formula:** IQR = Q3 - Q1")
+                        st.write(f"💡 **Q1 (25th percentile):** {df['Weight'].quantile(0.25):.2f}")
+                        st.write(f"💡 **Q3 (75th percentile):** {df['Weight'].quantile(0.75):.2f}")
+                        st.write(f"💡 **Lower Bound:** Q1 - 1.5 * IQR = {df['Weight'].quantile(0.25) - 1.5 * IQR:.2f}")
+                        st.write(f"💡 **Upper Bound:** Q3 + 1.5 * IQR = {df['Weight'].quantile(0.75) + 1.5 * IQR:.2f}")
+                    elif "median" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** The median is the middle value when the weights are sorted in ascending order.")
+                    elif "standard deviation" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** Standard deviation measures how spread out the weights are. A higher value means more variability.")
+                    elif "25th percentile" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** The 25th percentile (Q1) is the value below which 25% of the weights fall.")
+                        st.write(f"💡 **Q1 (25th percentile):** {df['Weight'].quantile(0.25):.2f}")
+                    elif "75th percentile" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** The 75th percentile (Q3) is the value below which 75% of the weights fall.")
+                        st.write(f"💡 **Q3 (75th percentile):** {df['Weight'].quantile(0.75):.2f}")
+                    elif "range" in question.lower():
+                        st.write(f"💡 **Hint for '{question}':** The range is the difference between the maximum and minimum weights in the dataset.")
+                    break
+    else:
+        st.write("💡 **Hint:** You've already used your hint for this game. No more hints are available.")
+
+    # Submit answers
+    if st.button("🚀 **Submit Answers**"):
+        correct = all(
+            round(float(answers[i]), 2) == round(float(correct_answer), 2)  # Round both for comparison
+            for i, (_, correct_answer) in enumerate(st.session_state.selected_questions)
+        )
+        if correct:
+            # Generate a 5-digit passcode
+            passcode = random.randint(10000, 99999)
+            st.session_state.passcode = passcode  # Store passcode in session state for Room 3
+
+            # Ship sailing animation
+            st.markdown("""
+                <style>
+                @keyframes sail {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(100%); }
+                }
+                .sail-animation {
+                    animation: sail 3s linear;
+                    font-size: 50px;
+                    text-align: center;
+                }
+                </style>
+                <div class="sail-animation">🚢</div>
+            """, unsafe_allow_html=True)
+            st.success(f"🎉 **Correct!** You've identified the anomalies and unlocked the next room. 🗝️")
+            st.write(f"🔑 **Your 5-digit passcode for Room 3:** `{passcode}`")
+            st.write("⚠️ **Note:** Save this passcode! You'll need it in Room 3 to perform regression analysis.")
+            st.session_state.current_room = "room_2"
+            st.rerun()
+        else:
+            st.error("❌ **Incorrect.** Please check your answers and try again. 🧐")
+
+    # Footer (displayed only once)
+    if "footer_displayed" not in st.session_state:
+        st.session_state.footer_displayed = True
+        st.markdown("---")
+        st.write("🌟 **Tip:** Use the descriptive statistics above to help you solve the challenges. Good luck, Captain! 🫡")
+
+# Function for Room 2: Data Visualization - The Hidden Shipping Routes
+def room_2():
+    st.title("Room 2: Data Visualization – The Hidden Shipping Routes")
+    st.write("""
+    The AI has encrypted key trade pathways. Use data visualization to uncover patterns and unlock the next code.
+    """)
+    # Timer logic
+    current_time = time.time()
+    time_elapsed = current_time - st.session_state.start_time
+    st.session_state.time_left = max(300 - time_elapsed, 0)
+    
+    # Display live countdown timer
+    timer_placeholder = st.empty()
+    with timer_placeholder:
+        st.write(f"### ⏳ **Time Left:** {int(st.session_state.time_left // 60)} min {int(st.session_state.time_left % 60)} sec")
+
+
+    # Add a progress bar for the timer
+    progress_bar = st.progress(1.0)  # Initialize progress bar at 100%
+    progress = st.session_state.time_left / 300  # Calculate progress (0 to 1)
+    progress_bar.progress(progress)
+
+    # Check if time is up
+    if st.session_state.time_left <= 0:
+        st.error("⏳ **Time's up!** The rogue AI has locked the system. Try again! 🚨")
+        st.session_state.start_time = time.time()
+        st.session_state.time_left = 300
+        st.rerun()
+
+   # Generate Random Shipping Data
+    np.random.seed(42)
+    data = pd.DataFrame({
+       'Route': [f'Route {i}' for i in range(1, 11)],
+       'Trade Volume': np.random.randint(50, 500, 10),
+       'Congestion Index': np.random.rand(10) * 100,
+       'Delay Hours': np.random.randint(1, 50, 10)
+    })
+
+   # Challenge 1: Histogram & Bar Chart
+    st.subheader("Challenge 1: Identify the Busiest Trade Route")
+    fig, ax = plt.subplots()
+    sns.barplot(x=data['Route'], y=data['Trade Volume'], ax=ax, palette='Blues')
+    ax.set_xticklabels(data['Route'], rotation=45)
+    st.pyplot(fig)
+
+    busiest_route = data.loc[data['Trade Volume'].idxmax(), 'Route']
+    user_answer1 = st.text_input("Which route has the highest trade volume? (e.g., Route 3)")
+
+    if user_answer1 == busiest_route:
+       st.success("✅ Correct! Proceed to the next challenge.")
+       st.session_state.challenge = 2
+
+   # Challenge 2: Scatter Plot for Congestion Points
+    if st.session_state.get("challenge", 1) >= 2:
+       st.subheader("Challenge 2: Identify the Most Congested Trade Route")
+       fig, ax = plt.subplots()
+       sns.scatterplot(x=data['Trade Volume'], y=data['Congestion Index'], size=data['Congestion Index'], sizes=(20, 200))
+       st.pyplot(fig)
+
+       most_congested_route = data.loc[data['Congestion Index'].idxmax(), 'Route']
+       user_answer2 = st.text_input("Which route has the highest congestion index? (e.g., Route 3)")
+
+       if user_answer2:
+           if user_answer2 == most_congested_route:
+               st.success("✅ Correct! Proceed to the final challenge.")
+               st.session_state.challenge = 3
+           else:
+               st.error("❌ Incorrect answer. Try again!")
+               st.info("💡 Hint: Each point represents a trade route. Find the route with the highest congestion index!")
+
+   # Challenge 3: Heatmap for Shipping Delays
+    if st.session_state.get("challenge", 1) >= 3:
+       st.subheader("Challenge 3: Decode Shipping Delays")
+       pivot_data = data.pivot_table(values='Delay Hours', index='Route')
+       fig, ax = plt.subplots()
+       sns.heatmap(pivot_data, cmap='coolwarm', annot=True, fmt=".1f", linewidths=0.5)
+       st.pyplot(fig)
+
+       # Extracting the correct answer from the heatmap (largest delay value)
+       correct_code = str(int(pivot_data.values.max()))  # Convert to string
+       user_code = st.text_input("Enter the final code from the heatmap:")
+
+       if user_code:
+           if user_code == correct_code:
+               st.success(f"✅ You've decoded the shipping delays! Your code to the next room is: **{correct_code}**")
+
+               # Button to proceed to Room 3
+               if st.button("🔹 Proceed to Room 3"):
+                   st.session_state.current_room = "room_3"
+                   st.rerun()
+
+           else:
+               st.error("❌ Incorrect code. Try again!")
+               # Add Hint after wrong attempts
+               st.info("💡 Hint: Look for the **darkest red cell** in the heatmap. The **largest** number is the code!")
+
+        
+
+# Main App Logic: Handling Room Navigation
+def room_3():
+    st.title("Room 5: Markov Chain – Cracking the AI’s Code")
+    st.write("""
+    Welcome to the high-tech command center, where the rogue AI is making real-time decisions based on probability states. 
+    Your objective is to predict the AI's next move and override its logic using Markov Chains.
+    """)
+
+    # Timer logic
+    current_time = time.time()
+    time_elapsed = current_time - st.session_state.start_time
+    st.session_state.time_left = max(300 - time_elapsed, 0)
+
+    # Display live countdown timer
+    timer_placeholder = st.empty()
+    with timer_placeholder:
+        st.write(f"### ⏳ **Time Left:** {int(st.session_state.time_left // 60)} min {int(st.session_state.time_left % 60)} sec")
+
+    # Add a progress bar for the timer
+    progress_bar = st.progress(1.0)  # Initialize progress bar at 100%
+    progress = st.session_state.time_left / 300  # Calculate progress (0 to 1)
+    progress_bar.progress(progress)
+
+# Define the States and Transition Matrix for the Markov Chain
+    states = ['Idle', 'Analyzing', 'Executing', 'Alerting', 'Overriding']
+    transition_matrix = np.arra([
+     [0.1, 0.4, 0.3, 0.1, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
+      [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+      [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+      [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
+      [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    ])
+
+ # Display the current state and transition matrix
+    current_state = st.session_state.get("current_state", "Idle")
+    st.write(f"Current State: **{current_state}**")
+ 
+    st.subheader("Transition Matrix:")
+    transition_df = {
+        'Idle': [0.1, 0.4, 0.3, 0.1, 0.1],
+        'Analyzing': [0.2, 0.2, 0.5, 0.05, 0.05],
+        'Executing': [0.1, 0.1, 0.7, 0.05, 0.05],
+        'Alerting': [0.15, 0.15, 0.15, 0.4, 0.15],
+        'Overriding': [0.2, 0.2, 0.2, 0.2, 0.2]
+    }
+    st.write(pd.DataFrame(transition_df, index=states))
+
+# Predict the next state (based on the transition probabilities)
+    st.subheader("Challenge: Predict the AI's next move!")
+    st.write("The AI is currently in a state, and it will transition to another state based on probabilities.")
+ 
+    next_state_probabilities = transition_matrix[states.index(current_state)]
+    st.write(f"Next State Probabilities: {next_state_probabilities}")
+ 
+
+   # Simulate the AI’s decision using the Markov Chain (by sampling based on probabilities)
+   #  predicted_state = st.selectbox("Which state do you think the AI will move to?", states)
+
+    ai_next_state = np.random.choice(states, p=next_state_probabilities)
+ 
+    if predicted_state == ai_next_state:
+        st.success(f"✅ Correct! The AI moved to **{ai_next_state}**.")
+        st.session_state.current_state = ai_next_state
+    else:
+        st.error(f"❌ Incorrect. The AI actually moved to **{ai_next_state}**.")
+ 
+ # Option to override AI’s decision using Markov Chain
+    st.subheader("Override the AI's Decision!")
+    if st.button("Override AI's Decision"):
+  # Override the decision with a random choice from the current state’s transition probabilities
+        override_state = np.random.choice(states, p=next_state_probabilities)
+        st.success(f"✅ You've overridden the AI's decision! The new state is **{override_state}**.")
+        st.session_state.current_state = override_state
+
+ # Button to proceed to next room
+    if st.session_state.get("current_state") == "Overriding" and st.button("🔹 Proceed to the Next Room"):
+        st.session_state.room = "room_5"
+        st.rerun()
+    # Proceed to the next room
+        st.write("You have successfully cracked the AI's code and can move to the next room!")
+
+    
+def main():
+    if "current_room" not in st.session_state:
+        st.session_state.current_room = "welcome_page"
+
+    if st.session_state.current_room == "welcome_page":
+        welcome_page()
+    elif st.session_state.current_room == "room_1":
+        room_1()
+    elif st.session_state.current_room == "room_2":
+        room_2()
+    elif st.session_state.current_room == "room_3":
+        room_3()
+    elif st.session_state.current_room == "roo_4":
+        room_4()
+    else:
+        st.write("🚀 You have completed all the rooms! Congratulations!")
+
+# Run the main function to start the game
+if __name__ == "__main__":
+    main()
+streamlit run main()
