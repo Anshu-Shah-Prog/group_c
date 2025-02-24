@@ -5,13 +5,65 @@ import random
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 # Function to load the Welcome Page
 def welcome_page():
-    st.markdown("### 🚢 The Great Shipping Escape: A Data-Driven Adventure")
-    st.markdown("""
-    Global Logistics Inc. is facing a crisis. A rogue AI has scrambled data, threatening global supply chains. Solve its challenges and save the company!
-    """)
-    if st.button("Start Game"):
+    # Background Image Fix
+    page_bg_img ="""
+    <style>
+    [data-testid="stAppViewContainer"] {
+        background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/sh8NM6TtzbzSujPkwJ-12.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+    [data-testid="stHeader"] {
+        background-color: rgba(0, 0, 0, 0);  /* Transparent header */
+    }
+    [data-testid="stToolbar"] {
+        right: 2rem;  /* Adjust toolbar position */
+    }
+    .main .block-container {
+        background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
+        padding: 20px;
+    }
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent black overlay */
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    </style>
+    """
+
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+
+    # Sidebar - Restart Button
+    with st.sidebar:
+        st.markdown("### 🎮 Game Controls")
+        if st.button("🔄 Restart Game", key="restart_button"):
+            st.session_state.current_room = "welcome_page"
+            st.session_state.start_time = None
+            st.session_state.time_left = 300
+            st.session_state.hint_used = False
+            st.session_state.completed_rooms = set()
+            st.rerun()
+
+    # Title and Introduction with Overlay
+    st.markdown(
+        """
+        <div class="overlay">
+            <h1 style='font-size: 45px; color: white;'>🚢 The Great Shipping Escape</h1>
+            <p style='font-size: 22px; font-weight: bold; color: white;'>
+                🌎 A <strong>rogue AI</strong> has scrambled all logistics data! 📦 Chaos in supply chains!  
+                🧠 Can <strong>you</strong> solve the puzzles & save the world?  
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Start Game Button
+    if st.button("🚀 Start Your Mission!", key="start_button"):
         st.session_state.current_room = "room_1"
         st.session_state.start_time = time.time()
         st.session_state.time_left = 300
@@ -45,34 +97,55 @@ room1_background = """
 """
 # Function for Room 1: Descriptive Statistics - The Manifest Mishap
 def room_1():
-    st.title("Room 1: Descriptive Statistics – The Manifest Mishap")
-    st.markdown(room1_background, unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="room1-page">
-            <div class="room1-title">🚢 Room 1: Descriptive Statistics – The Manifest Mishap</div>
-            <div class="room1-text">
-                <h3>📋 Objective</h3>
-                <p>
-                    The rogue AI, LogiX, has corrupted the cargo manifests, scrambling the weight data. Your task is to analyze the dataset using descriptive statistics, identify anomalies, and unlock the next room.
-                </p>
-                <p>
-                    <strong>LogiX's Message:</strong> "Welcome, human. You think you can outsmart me? Prove your worth by identifying the anomalies in the cargo data. Fail, and the supply chain collapses."
-                </p>
-                <h3>📋 Challenges</h3>
-                <ul>
-                    <li>Calculate mean, median, and mode to detect abnormal cargo weights.</li>
-                    <li>Use standard deviation to identify outliers in the shipments.</li>
-                    <li>Apply percentiles to compare shipments and detect any unusual trends.</li>
-                </ul>
-                <p>
-                    <strong>Reward:</strong> Successfully solving the challenges will grant you a <strong>5-digit passcode</strong> to use in Room 3.
-                </p>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+# Background Image for Room 1
+    room1_bg_img = """
+    <style>
+    [data-testid="stAppViewContainer"] {
+        background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/6aCjR6VCKvuAMWUH-HWF4.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+    [data-testid="stHeader"] {
+        background-color: rgba(0, 0, 0, 0);  /* Transparent header */
+    }
+    [data-testid="stToolbar"] {
+        right: 2rem;  /* Adjust toolbar position */
+    }
+    .main .block-container {
+        background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
+        padding: 20px;
+    }
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.7);  /* Semi-transparent black overlay */
+        padding: 20px;
+        border-radius: 10px;
+        color: white;  /* White text for better contrast */
+    }
+    .stDataFrame {
+        background-color: rgba(255, 255, 255, 0.8);  /* Semi-transparent white background for DataFrame */
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .stNumberInput label {
+        color: white !important;  /* Ensure input labels are white */
+    }
+    </style>
+    """
+
+    st.markdown(room1_bg_img, unsafe_allow_html=True)
+
+    # Room 1 Content with Overlay
+    st.markdown("""
+    <div class="overlay">
+        <h1 style='text-align: center; font-size: 36px;'>🚢 Room 1: Descriptive Statistics – The Manifest Mishap</h1>
+        <h3>📋 Objective</h3>
+        <p>
+            The rogue AI, LogiX, has corrupted the cargo manifests, scrambling the weight data. Your task is to analyze the dataset using descriptive statistics, identify anomalies, and unlock the next room.
+        </p>
+        <p>
+            <strong>LogiX's Message:</strong> "Welcome, human. You think you can outsmart me? Prove your worth by identifying the anomalies in the cargo data. Fail, and the supply chain collapses."
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Load dataset
     df = pd.read_csv("ship_data.csv")
@@ -305,7 +378,7 @@ def room_2():
 
        if user_code:
            if user_code == correct_code:
-               st.success(f"✅ You've decoded the shipping delays! Your code to the next room is: **{correct_code}**")
+               st.success(f"✅ You've decoded the shipping delays! Your code to the next room is: stormy2025")
 
                # Button to proceed to Room 3
                if st.button("🔹 Proceed to Room 3"):
@@ -319,8 +392,8 @@ def room_2():
 
         
 
-# Main App Logic: Handling Room Navigation
-def room_3():
+    # Main App Logic: Handling Room Navigation
+def room_4():
     st.title("Room 5: Markov Chain – Cracking the AI’s Code")
     st.write("""
     Welcome to the high-tech command center, where the rogue AI is making real-time decisions based on probability states. 
@@ -342,17 +415,17 @@ def room_3():
     progress = st.session_state.time_left / 300  # Calculate progress (0 to 1)
     progress_bar.progress(progress)
 
-# Define the States and Transition Matrix for the Markov Chain
+    # Define the States and Transition Matrix for the Markov Chain
     states = ['Idle', 'Analyzing', 'Executing', 'Alerting', 'Overriding']
-    transition_matrix = np.arra([
+    transition_matrix = np.array([
      [0.1, 0.4, 0.3, 0.1, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
-      [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-      [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-      [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
-      [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
     ])
 
- # Display the current state and transition matrix
+    # Display the current state and transition matrix
     current_state = st.session_state.get("current_state", "Idle")
     st.write(f"Current State: **{current_state}**")
  
@@ -366,7 +439,7 @@ def room_3():
     }
     st.write(pd.DataFrame(transition_df, index=states))
 
-# Predict the next state (based on the transition probabilities)
+    # Predict the next state (based on the transition probabilities)
     st.subheader("Challenge: Predict the AI's next move!")
     st.write("The AI is currently in a state, and it will transition to another state based on probabilities.")
  
@@ -374,8 +447,8 @@ def room_3():
     st.write(f"Next State Probabilities: {next_state_probabilities}")
  
 
-   # Simulate the AI’s decision using the Markov Chain (by sampling based on probabilities)
-   #  predicted_state = st.selectbox("Which state do you think the AI will move to?", states)
+    # Simulate the AI’s decision using the Markov Chain (by sampling based on probabilities)
+    predicted_state = st.selectbox("Which state do you think the AI will move to?", states)
 
     ai_next_state = np.random.choice(states, p=next_state_probabilities)
  
@@ -385,22 +458,157 @@ def room_3():
     else:
         st.error(f"❌ Incorrect. The AI actually moved to **{ai_next_state}**.")
  
- # Option to override AI’s decision using Markov Chain
+    # Option to override AI’s decision using Markov Chain
     st.subheader("Override the AI's Decision!")
     if st.button("Override AI's Decision"):
-  # Override the decision with a random choice from the current state’s transition probabilities
+    # Override the decision with a random choice from the current state’s transition probabilities
         override_state = np.random.choice(states, p=next_state_probabilities)
         st.success(f"✅ You've overridden the AI's decision! The new state is **{override_state}**.")
         st.session_state.current_state = override_state
-
- # Button to proceed to next room
-    if st.session_state.get("current_state") == "Overriding" and st.button("🔹 Proceed to the Next Room"):
-        st.session_state.room = "room_5"
-        st.rerun()
-    # Proceed to the next room
+    # Button to proceed to next room
+    if st.session_state.get("current_state") == "Overriding":
         st.write("You have successfully cracked the AI's code and can move to the next room!")
+        if st.button("🔹 Proceed to the Next Room"):
+            st.session_state.current_room = "room_5"
+            st.rerun()
+            # Proceed to the next room
+def room_3():
+    # Simulated dataset (Shipping Logs + Weather Conditions)
+    data = {
+        'Distance (km)': np.random.randint(100, 10000, 50),
+        'Weather Severity (1-10)': np.random.randint(1, 11, 50),
+        'Port Congestion (1-10)': np.random.randint(1, 11, 50),
+        'Shipping Delay (hours)': np.random.randint(5, 100, 50)
+    }
+    df = pd.DataFrame(data)
 
+    # Train a regression model
+    X = df[['Distance (km)', 'Weather Severity (1-10)', 'Port Congestion (1-10)']]
+    y = df['Shipping Delay (hours)']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    # Streamlit UI
+    st.title("🚢 Room 3: Regression Analysis – Forecasting Stormy Seas")
+    st.write("What is the dealy time for Distance= 1500 km, Weather severity = 4, Port Congestion = 3")
+
+    # Show dataset
+    st.subheader("Shipping Logs & Weather Conditions")
+    st.dataframe(df)
+
+    # One-time passcode to activate prediction
+    st.subheader("Enter Passcode to Activate Prediction")
+    passcode = st.text_input("Enter Passcode", type="password")
+    correct_passcode = "stormy2025"
+
+    if passcode == correct_passcode:
+        st.success("Passcode accepted! You may proceed.")
     
+        # Display the question before entering conditions
+        st.subheader("Question")
+        st.write("You have access to shipping logs and weather conditions. Analyze the data and enter the conditions below to predict the shipping delay.")
+    
+        # User input
+        st.subheader("Enter Conditions to Predict Delay Time")
+        distance = st.number_input("Distance (km)", min_value=100, max_value=10000, value=1000, step=100)
+        weather = st.slider("Weather Severity (1-10)", min_value=1, max_value=10, value=5)
+        congestion = st.slider("Port Congestion (1-10)", min_value=1, max_value=10, value=5)
+    
+        # Predict button
+        if st.button("Predict Shipping Delay"):
+            prediction = model.predict([[distance, weather, congestion]])[0]
+            st.success(f"Predicted Shipping Delay: {prediction:.2f} hours")
+            st.session_state["prediction"] = prediction
+        # User enters their predicted answer
+        if "prediction" in st.session_state:
+            st.subheader("Enter Your Answer")
+            user_answer = st.number_input("What is the predicted shipping delay time?", min_value=0.0, step=0.1)
+        if st.button("Submit Answer"):
+            if abs(user_answer - st.session_state["prediction"]) < 1.0:  # Allowing small error margin
+                st.success("Correct! You may proceed to the next room.")
+                st.session_state.current_room = "room_4"  # Change room
+                st.rerun()
+            else:
+                st.error("Incorrect! Try again.")
+    else:
+        st.warning("Enter the correct passcode to continue.")
+def room_5():
+   # Set the background image using custom CSS
+    st.markdown(
+        f"""
+        <style>
+        [data-testid="stAppViewContainer"] {{
+            background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/zqHA2DoM7kC6vdy8uKqeJ.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }}
+        [data-testid="stHeader"] {{
+            background-color: rgba(0, 0, 0, 0);  /* Transparent header */
+        }}
+        [data-testid="stToolbar"] {{
+            right: 2rem;  /* Adjust toolbar position */
+        }}
+        .main .block-container {{
+            background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
+            padding: 20px;
+        }}
+        .overlay {{
+            background-color: rgba(0, 0, 0, 0.8);  /* Darker semi-transparent black overlay */
+            padding: 40px;  /* Increased padding for better spacing */
+            border-radius: 15px;  /* Rounded corners */
+            color: white;  /* White text for better contrast */
+            text-align: center;
+            margin: 0 auto;  /* Center the overlay */
+            max-width: 800px;  /* Limit width for better readability */
+        }}
+        .overlay h1 {{
+            font-size: 45px;  /* Larger heading */
+            margin-bottom: 20px;  /* Spacing below heading */
+        }}
+        .overlay p {{
+            font-size: 22px;  /* Larger paragraph text */
+            line-height: 1.6;  /* Improved line spacing */
+            margin-bottom: 20px;  /* Spacing below paragraphs */
+        }}
+        .overlay h2 {{
+            font-size: 36px;  /* Larger subheading */
+            margin-top: 30px;  /* Spacing above subheading */
+            margin-bottom: 20px;  /* Spacing below subheading */
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Victory message with overlay
+    st.markdown(
+        """
+        <div class="overlay">
+            <h1>🎉 Congratulations, Commander!</h1>
+            <p>
+                <strong>Mission Accomplished!</strong><br><br>
+                You have successfully navigated through the layers of the rogue AI's defenses. By decoding shipping routes, forecasting stormy seas with regression analysis, and cracking the AI’s Markov Chain, you have proven your analytical prowess.<br><br>
+                <strong>LogiX's Final Message:</strong><br>
+                "You have outsmarted my algorithms and disrupted my operations. The supply lines remain open and the future is secured—thanks to your brilliance. This is not the end, but the beginning of a new era of human ingenuity."<br><br>
+                Thank you for playing. Your journey in overcoming the AI's challenges has come to a triumphant close.
+            </p>
+            <h2>🚀 <strong>GAME OVER</strong></h2>
+            <p>
+                🚀 You have completed all the rooms! Congratulations!
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    # Restart button
+    if st.button("🔄 Restart Game", key="restart_button_final"):
+        st.session_state.current_room = "welcome_page"
+        st.session_state.start_time = None
+        st.session_state.time_left = 300
+        st.session_state.hint_used = False
+        st.session_state.completed_rooms = set()
+        st.rerun()
+   
 def main():
     if "current_room" not in st.session_state:
         st.session_state.current_room = "welcome_page"
@@ -413,11 +621,12 @@ def main():
         room_2()
     elif st.session_state.current_room == "room_3":
         room_3()
-    elif st.session_state.current_room == "roo_4":
+    elif st.session_state.current_room == "room_4":
         room_4()
+    elif st.session_state.current_room == "room_5":
+        room_5()
     else:
         st.write("🚀 You have completed all the rooms! Congratulations!")
-
 # Run the main function to start the game
 if __name__ == "__main__":
     main()
