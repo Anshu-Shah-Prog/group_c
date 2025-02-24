@@ -473,12 +473,81 @@ def room_2():
 
     # Main App Logic: Handling Room Navigation
 def room_4():
-    st.title("Room 5: Markov Chain – Cracking the AI’s Code")
-    st.write("""
-    Welcome to the high-tech command center, where the rogue AI is making real-time decisions based on probability states. 
-    Your objective is to predict the AI's next move and override its logic using Markov Chains.
-    """)
+    # Set the background image using custom CSS
+    st.markdown(
+        f"""
+        <style>
+        [data-testid="stAppViewContainer"] {{
+            background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/EAn2KWfwMzDMYSZvHwCeR.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }}
+        [data-testid="stHeader"] {{
+            background-color: rgba(0, 0, 0, 0);  /* Transparent header */
+        }}
+        [data-testid="stToolbar"] {{
+            right: 2rem;  /* Adjust toolbar position */
+        }}
+        .main .block-container {{
+            background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
+            padding: 20px;
+        }}
+        .overlay {{
+            background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white overlay */
+            padding: 40px;  /* Increased padding for better spacing */
+            border-radius: 15px;  /* Rounded corners */
+            color: black;  /* Black text for better contrast */
+            text-align: center;
+            margin: 0 auto;  /* Center the overlay */
+            max-width: 800px;  /* Limit width for better readability */
+        }}
+        .overlay h1 {{
+            font-size: 36px;  /* Smaller heading */
+            margin-bottom: 20px;  /* Spacing below heading */
+        }}
+        .overlay h3 {{
+            font-size: 24px;  /* Smaller subheading */
+            margin-bottom: 15px;  /* Spacing below subheading */
+        }}
+        .overlay p {{
+            font-size: 18px;  /* Smaller paragraph text */
+            line-height: 1.6;  /* Improved line spacing */
+            margin-bottom: 15px;  /* Spacing below paragraphs */
+        }}
+        .stTextInput, .stNumberInput, .stSelectbox, .stButton button {{
+            background-color: rgba(255, 255, 255, 0.9) !important;  /* Semi-transparent white background for inputs */
+            color: black !important;  /* Black text for inputs */
+            border-radius: 5px;  /* Rounded corners for inputs */
+            padding: 10px;  /* Padding for inputs */
+        }}
+        .stTextInput label, .stNumberInput label, .stSelectbox label {{
+            color: black !important;  /* Black labels for inputs */
+        }}
+        .stButton button {{
+            font-size: 18px;  /* Larger button text */
+            font-weight: bold;  /* Bold button text */
+            color: black !important;  /* Black text for buttons */
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
+    # Room 4 Content with Overlay
+    st.markdown(
+        """
+        <div class="overlay">
+            <h1>🚢 Room 4: Markov Chain – Cracking the AI’s Code</h1>
+            <h3>📋 Objective</h3>
+            <p>
+                The rogue AI, LogiX, is making real-time decisions based on probability states. Your task is to predict the AI's next move and override its logic using Markov Chains.
+            </p>
+            <p>
+                <strong>LogiX's Message:</strong> "You think you can outsmart me? Predict my next move and prove your worth."
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     # Timer logic
     current_time = time.time()
     time_elapsed = current_time - st.session_state.start_time
@@ -607,6 +676,23 @@ def room_3():
             color: black !important;  /* Black text for buttons */
         }}
         </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Room 3 Content with Overlay
+    st.markdown(
+        """
+        <div class="overlay">
+            <h1>🚢 Room 3: Regression Analysis – Forecasting Stormy Seas</h1>
+            <h3>📋 Objective</h3>
+            <p>
+                The rogue AI, LogiX, has disrupted shipping routes by altering weather patterns. Your task is to use regression analysis to predict shipping delays and unlock the next room.
+            </p>
+            <p>
+                <strong>LogiX's Message:</strong> "You think you can predict the future? Prove your worth by forecasting the stormy seas."
+            </p>
+        </div>
         """,
         unsafe_allow_html=True
     )
