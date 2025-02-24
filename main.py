@@ -296,10 +296,86 @@ def room_1():
 
 # Function for Room 2: Data Visualization - The Hidden Shipping Routes
 def room_2():
-    st.title("Room 2: Data Visualization – The Hidden Shipping Routes")
-    st.write("""
-    The AI has encrypted key trade pathways. Use data visualization to uncover patterns and unlock the next code.
-    """)
+# Set the background image using custom CSS
+    st.markdown(
+        f"""
+        <style>
+        [data-testid="stAppViewContainer"] {{
+            background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/TE7yl-Xx3gmPnzsLFtCyz.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }}
+        [data-testid="stHeader"] {{
+            background-color: rgba(0, 0, 0, 0);  /* Transparent header */
+        }}
+        [data-testid="stToolbar"] {{
+            right: 2rem;  /* Adjust toolbar position */
+        }}
+        .main .block-container {{
+            background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
+            padding: 20px;
+        }}
+        .overlay {{
+            background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white overlay */
+            padding: 40px;  /* Increased padding for better spacing */
+            border-radius: 15px;  /* Rounded corners */
+            color: black;  /* Black text for better contrast */
+            text-align: center;
+            margin: 0 auto;  /* Center the overlay */
+            max-width: 800px;  /* Limit width for better readability */
+        }}
+        .overlay h1 {{
+            font-size: 36px;  /* Smaller heading */
+            margin-bottom: 20px;  /* Spacing below heading */
+        }}
+        .overlay h3 {{
+            font-size: 24px;  /* Smaller subheading */
+            margin-bottom: 15px;  /* Spacing below subheading */
+        }}
+        .overlay p {{
+            font-size: 18px;  /* Smaller paragraph text */
+            line-height: 1.6;  /* Improved line spacing */
+            margin-bottom: 15px;  /* Spacing below paragraphs */
+        }}
+        .overlay ul {{
+            font-size: 18px;  /* Smaller list text */
+            text-align: left;  /* Align list to the left */
+            margin-left: 20px;  /* Indent list */
+        }}
+        .stTextInput, .stNumberInput, .stSelectbox, .stButton button {{
+            background-color: rgba(255, 255, 255, 0.9) !important;  /* Semi-transparent white background for inputs */
+            color: black !important;  /* Black text for inputs */
+            border-radius: 5px;  /* Rounded corners for inputs */
+            padding: 10px;  /* Padding for inputs */
+        }}
+        .stTextInput label, .stNumberInput label, .stSelectbox label {{
+            color: black !important;  /* Black labels for inputs */
+        }}
+        .stButton button {{
+            font-size: 18px;  /* Larger button text */
+            font-weight: bold;  /* Bold button text */
+            color: black !important;  /* Black text for buttons */
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Room 2 Content with Overlay
+    st.markdown(
+        """
+        <div class="overlay">
+            <h1>🚢 Room 2: Data Visualization – The Hidden Shipping Routes</h1>
+            <h3>📋 Objective</h3>
+            <p>
+                The rogue AI, LogiX, has encrypted key trade pathways. Your task is to use data visualization to uncover patterns and unlock the next code.
+            </p>
+            <p>
+                <strong>LogiX's Message:</strong> "You think you can outsmart me? Decode the shipping routes and prove your worth."
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     # Timer logic
     current_time = time.time()
     time_elapsed = current_time - st.session_state.start_time
