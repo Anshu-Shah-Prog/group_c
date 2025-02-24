@@ -421,4 +421,3 @@ def main():
 # Run the main function to start the game
 if __name__ == "__main__":
     main()
-streamlit run main()
