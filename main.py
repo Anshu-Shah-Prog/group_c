@@ -426,7 +426,10 @@ def room_2():
     if st.session_state.get("challenge", 1) >= 2:
        st.subheader("Challenge 2: Identify the Most Congested Trade Route")
        fig, ax = plt.subplots()
-       sns.scatterplot(x=data['Trade Volume'], y=data['Congestion Index'], size=data['Congestion Index'], sizes=(20, 200))
+       sns.scatterplot(x=data['Trade Volume'], y=data['Congestion Index'], size=data['Congestion Index'], sizes=(20, 200),legend=True)
+       for i, txt in enumerate(data['Route']):
+        ax.annotate(txt, (data['Trade Volume'][i], data['Congestion Index'][i]), fontsize=9, ha='right')
+
        st.pyplot(fig)
 
        most_congested_route = data.loc[data['Congestion Index'].idxmax(), 'Route']
