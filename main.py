@@ -579,11 +579,11 @@ def room_4():
  
     st.subheader("Transition Matrix:")
     transition_df = {
-        'Idle': [0.1, 0.4, 0.3, 0.1, 0.1],
-        'Analyzing': [0.2, 0.2, 0.5, 0.05, 0.05],
+        'Idle': [0.1, 0.2, 0.3, 0.2, 0.1],
+        'Analyzing': [0.4, 0.2, 0.5, 0.05, 0.2],
         'Executing': [0.1, 0.1, 0.7, 0.05, 0.05],
-        'Alerting': [0.15, 0.15, 0.15, 0.4, 0.15],
-        'Overriding': [0.2, 0.2, 0.2, 0.2, 0.2]
+        'Alerting': [0.3, 0.5, 0.1, 0.05, 0.2],
+        'Overriding': [0.1, 0.05, 0.02, 0.3, 0.25]
     }
     st.write(pd.DataFrame(transition_df, index=states))
 
