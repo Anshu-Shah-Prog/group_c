@@ -614,7 +614,7 @@ def room_4():
         st.success(f"✅ You've overridden the AI's decision! The new state is **{override_state}**.")
         st.session_state.current_state = override_state
     # Button to proceed to next room
-    if st.session_state.get("current_state") == st.session_state.get("overriding_state"):
+    if st.session_state.get("current_state") == "Overriding":
         st.write("You have successfully cracked the AI's code and can move to the next room!")
         if st.button("🔹 Proceed to the Next Room"):
             st.session_state.current_room = "room_5"
