@@ -566,11 +566,11 @@ def room_4():
     # Define the States and Transition Matrix for the Markov Chain
     states = ['Idle', 'Analyzing', 'Executing', 'Alerting', 'Overriding']
     transition_matrix = np.array([
-     [0.1, 0.4, 0.3, 0.1, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
+     [0.1, 0.2, 0.3, 0.2, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.4, 0.2, 0.5, 0.05, 0.2], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.3, 0.5, 0.1, 0.05, 0.2], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.2, 0.05, 0.05, 0.3, 0.25], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.1, 0.05, 0.02, 0.3, 0.25], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
     ])
 
     # Display the current state and transition matrix
