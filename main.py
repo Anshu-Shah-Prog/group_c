@@ -566,11 +566,11 @@ def room_4():
     # Define the States and Transition Matrix for the Markov Chain
     states = ['Idle', 'Analyzing', 'Executing', 'Alerting', 'Overriding']
     transition_matrix = np.array([
-     [0.1, 0.2, 0.3, 0.2, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.4, 0.2, 0.5, 0.05, 0.2], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.3, 0.5, 0.1, 0.05, 0.2], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.2, 0.05, 0.05, 0.3, 0.25], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.1, 0.05, 0.02, 0.3, 0.25], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
+     [0.1, 0.4, 0.3, 0.1, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
+    [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
     ])
 
     # Display the current state and transition matrix
@@ -579,14 +579,13 @@ def room_4():
  
     st.subheader("Transition Matrix:")
     transition_df = {
-        'Idle': [0.1, 0.2, 0.3, 0.2, 0.1],
-        'Analyzing': [0.4, 0.2, 0.5, 0.05, 0.2],
+        'Idle': [0.1, 0.4, 0.3, 0.1, 0.1],
+        'Analyzing': [0.2, 0.2, 0.5, 0.05, 0.05],
         'Executing': [0.1, 0.1, 0.7, 0.05, 0.05],
-        'Alerting': [0.3, 0.5, 0.1, 0.05, 0.2],
-        'Overriding': [0.1, 0.05, 0.02, 0.3, 0.25]
+        'Alerting': [0.15, 0.15, 0.15, 0.4, 0.15],
+        'Overriding': [0.2, 0.2, 0.2, 0.2, 0.2]
     }
     st.write(pd.DataFrame(transition_df, index=states))
-
     # Predict the next state (based on the transition probabilities)
     st.subheader("Challenge: Predict the AI's next move!")
     st.write("The AI is currently in a state, and it will transition to another state based on probabilities.")
