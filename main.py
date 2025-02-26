@@ -472,153 +472,153 @@ def room_2():
         
 
     # Main App Logic: Handling Room Navigation
-def room_4():
-    # Set the background image using custom CSS
-    st.markdown(
-        f"""
-        <style>
-        [data-testid="stAppViewContainer"] {{
-            background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/EAn2KWfwMzDMYSZvHwCeR.jpg") no-repeat center center fixed;
-            background-size: cover;
-        }}
-        [data-testid="stHeader"] {{
-            background-color: rgba(0, 0, 0, 0);  /* Transparent header */
-        }}
-        [data-testid="stToolbar"] {{
-            right: 2rem;  /* Adjust toolbar position */
-        }}
-        .main .block-container {{
-            background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
-            padding: 20px;
-        }}
-        .overlay {{
-            background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white overlay */
-            padding: 40px;  /* Increased padding for better spacing */
-            border-radius: 15px;  /* Rounded corners */
-            color: black;  /* Black text for better contrast */
-            text-align: center;
-            margin: 0 auto;  /* Center the overlay */
-            max-width: 800px;  /* Limit width for better readability */
-        }}
-        .overlay h1 {{
-            font-size: 36px;  /* Smaller heading */
-            margin-bottom: 20px;  /* Spacing below heading */
-        }}
-        .overlay h3 {{
-            font-size: 24px;  /* Smaller subheading */
-            margin-bottom: 15px;  /* Spacing below subheading */
-        }}
-        .overlay p {{
-            font-size: 18px;  /* Smaller paragraph text */
-            line-height: 1.6;  /* Improved line spacing */
-            margin-bottom: 15px;  /* Spacing below paragraphs */
-        }}
-        .stTextInput, .stNumberInput, .stSelectbox, .stButton button {{
-            background-color: rgba(255, 255, 255, 0.9) !important;  /* Semi-transparent white background for inputs */
-            color: black !important;  /* Black text for inputs */
-            border-radius: 5px;  /* Rounded corners for inputs */
-            padding: 10px;  /* Padding for inputs */
-        }}
-        .stTextInput label, .stNumberInput label, .stSelectbox label {{
-            color: black !important;  /* Black labels for inputs */
-        }}
-        .stButton button {{
-            font-size: 18px;  /* Larger button text */
-            font-weight: bold;  /* Bold button text */
-            color: black !important;  /* Black text for buttons */
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+# def room_4():
+#     # Set the background image using custom CSS
+#     st.markdown(
+#         f"""
+#         <style>
+#         [data-testid="stAppViewContainer"] {{
+#             background: url("https://cdn.gamma.app/to1aya4l718rehv/generated-images/EAn2KWfwMzDMYSZvHwCeR.jpg") no-repeat center center fixed;
+#             background-size: cover;
+#         }}
+#         [data-testid="stHeader"] {{
+#             background-color: rgba(0, 0, 0, 0);  /* Transparent header */
+#         }}
+#         [data-testid="stToolbar"] {{
+#             right: 2rem;  /* Adjust toolbar position */
+#         }}
+#         .main .block-container {{
+#             background-color: rgba(255, 255, 255, 0);  /* Fully transparent background for content */
+#             padding: 20px;
+#         }}
+#         .overlay {{
+#             background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white overlay */
+#             padding: 40px;  /* Increased padding for better spacing */
+#             border-radius: 15px;  /* Rounded corners */
+#             color: black;  /* Black text for better contrast */
+#             text-align: center;
+#             margin: 0 auto;  /* Center the overlay */
+#             max-width: 800px;  /* Limit width for better readability */
+#         }}
+#         .overlay h1 {{
+#             font-size: 36px;  /* Smaller heading */
+#             margin-bottom: 20px;  /* Spacing below heading */
+#         }}
+#         .overlay h3 {{
+#             font-size: 24px;  /* Smaller subheading */
+#             margin-bottom: 15px;  /* Spacing below subheading */
+#         }}
+#         .overlay p {{
+#             font-size: 18px;  /* Smaller paragraph text */
+#             line-height: 1.6;  /* Improved line spacing */
+#             margin-bottom: 15px;  /* Spacing below paragraphs */
+#         }}
+#         .stTextInput, .stNumberInput, .stSelectbox, .stButton button {{
+#             background-color: rgba(255, 255, 255, 0.9) !important;  /* Semi-transparent white background for inputs */
+#             color: black !important;  /* Black text for inputs */
+#             border-radius: 5px;  /* Rounded corners for inputs */
+#             padding: 10px;  /* Padding for inputs */
+#         }}
+#         .stTextInput label, .stNumberInput label, .stSelectbox label {{
+#             color: black !important;  /* Black labels for inputs */
+#         }}
+#         .stButton button {{
+#             font-size: 18px;  /* Larger button text */
+#             font-weight: bold;  /* Bold button text */
+#             color: black !important;  /* Black text for buttons */
+#         }}
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
 
-    # Room 4 Content with Overlay
-    st.markdown(
-        """
-        <div class="overlay">
-            <h1>🚢 Room 4: Markov Chain – Cracking the AI’s Code</h1>
-            <h3>📋 Objective</h3>
-            <p>
-                The rogue AI, LogiX, is making real-time decisions based on probability states. Your task is to predict the AI's next move and override its logic using Markov Chains.
-            </p>
-            <p>
-                <strong>LogiX's Message:</strong> "You think you can outsmart me? Predict my next move and prove your worth."
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    # Timer logic
-    current_time = time.time()
-    time_elapsed = current_time - st.session_state.start_time
-    st.session_state.time_left = max(300 - time_elapsed, 0)
+#     # Room 4 Content with Overlay
+#     st.markdown(
+#         """
+#         <div class="overlay">
+#             <h1>🚢 Room 4: Markov Chain – Cracking the AI’s Code</h1>
+#             <h3>📋 Objective</h3>
+#             <p>
+#                 The rogue AI, LogiX, is making real-time decisions based on probability states. Your task is to predict the AI's next move and override its logic using Markov Chains.
+#             </p>
+#             <p>
+#                 <strong>LogiX's Message:</strong> "You think you can outsmart me? Predict my next move and prove your worth."
+#             </p>
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     # Timer logic
+#     current_time = time.time()
+#     time_elapsed = current_time - st.session_state.start_time
+#     st.session_state.time_left = max(300 - time_elapsed, 0)
 
-    # Display live countdown timer
-    timer_placeholder = st.empty()
-    with timer_placeholder:
-        st.write(f"### ⏳ **Time Left:** {int(st.session_state.time_left // 60)} min {int(st.session_state.time_left % 60)} sec")
+#     # Display live countdown timer
+#     timer_placeholder = st.empty()
+#     with timer_placeholder:
+#         st.write(f"### ⏳ **Time Left:** {int(st.session_state.time_left // 60)} min {int(st.session_state.time_left % 60)} sec")
 
-    # Add a progress bar for the timer
-    progress_bar = st.progress(1.0)  # Initialize progress bar at 100%
-    progress = st.session_state.time_left / 300  # Calculate progress (0 to 1)
-    progress_bar.progress(progress)
+#     # Add a progress bar for the timer
+#     progress_bar = st.progress(1.0)  # Initialize progress bar at 100%
+#     progress = st.session_state.time_left / 300  # Calculate progress (0 to 1)
+#     progress_bar.progress(progress)
 
-    # Define the States and Transition Matrix for the Markov Chain
-    states = ['Idle', 'Analyzing', 'Executing', 'Alerting', 'Overriding']
-    transition_matrix = np.array([
-     [0.1, 0.4, 0.3, 0.1, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
-    ])
+#     # Define the States and Transition Matrix for the Markov Chain
+#     states = ['Idle', 'Analyzing', 'Executing', 'Alerting', 'Overriding']
+#     transition_matrix = np.array([
+#      [0.1, 0.4, 0.3, 0.1, 0.1], # Idle -> [Idle, Analyzing, Executing, Alerting, Overriding]
+#     [0.2, 0.2, 0.5, 0.05, 0.05], # Analyzing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+#     [0.1, 0.1, 0.7, 0.05, 0.05], # Executing -> [Idle, Analyzing, Executing, Alerting, Overriding]
+#     [0.15, 0.15, 0.15, 0.4, 0.15], # Alerting -> [Idle, Analyzing, Executing, Alerting, Overriding]
+#     [0.2, 0.2, 0.2, 0.2, 0.2], # Overriding -> [Idle, Analyzing, Executing, Alerting, Overriding]
+#     ])
 
-    # Display the current state and transition matrix
-    current_state = st.session_state.get("current_state", "Idle")
-    st.write(f"Current State: **{current_state}**")
+#     # Display the current state and transition matrix
+#     current_state = st.session_state.get("current_state", "Idle")
+#     st.write(f"Current State: **{current_state}**")
  
-    st.subheader("Transition Matrix:")
-    transition_df = {
-        'Idle': [0.1, 0.4, 0.3, 0.1, 0.1],
-        'Analyzing': [0.2, 0.2, 0.5, 0.05, 0.05],
-        'Executing': [0.1, 0.1, 0.7, 0.05, 0.05],
-        'Alerting': [0.15, 0.15, 0.15, 0.4, 0.15],
-        'Overriding': [0.2, 0.2, 0.2, 0.2, 0.2]
-    }
-    st.write(pd.DataFrame(transition_df, index=states))
-    # Predict the next state (based on the transition probabilities)
-    st.subheader("Challenge: Predict the AI's next move!")
-    st.write("The AI is currently in a state, and it will transition to another state based on probabilities.")
+#     st.subheader("Transition Matrix:")
+#     transition_df = {
+#         'Idle': [0.1, 0.4, 0.3, 0.1, 0.1],
+#         'Analyzing': [0.2, 0.2, 0.5, 0.05, 0.05],
+#         'Executing': [0.1, 0.1, 0.7, 0.05, 0.05],
+#         'Alerting': [0.15, 0.15, 0.15, 0.4, 0.15],
+#         'Overriding': [0.2, 0.2, 0.2, 0.2, 0.2]
+#     }
+#     st.write(pd.DataFrame(transition_df, index=states))
+#     # Predict the next state (based on the transition probabilities)
+#     st.subheader("Challenge: Predict the AI's next move!")
+#     st.write("The AI is currently in a state, and it will transition to another state based on probabilities.")
  
-    next_state_probabilities = transition_matrix[states.index(current_state)]
-    st.write(f"Next State Probabilities: {next_state_probabilities}")
+#     next_state_probabilities = transition_matrix[states.index(current_state)]
+#     st.write(f"Next State Probabilities: {next_state_probabilities}")
  
 
-    # Simulate the AI’s decision using the Markov Chain (by sampling based on probabilities)
-    predicted_state = st.selectbox("Which state do you think the AI will move to?", states)
+#     # Simulate the AI’s decision using the Markov Chain (by sampling based on probabilities)
+#     predicted_state = st.selectbox("Which state do you think the AI will move to?", states)
 
-    ai_next_state = np.random.choice(states, p=next_state_probabilities)
+#     ai_next_state = np.random.choice(states, p=next_state_probabilities)
  
-    if predicted_state == ai_next_state:
-        st.success(f"✅ Correct! The AI moved to **{ai_next_state}**.")
-        st.session_state.current_state = ai_next_state
-    else:
-        st.error(f"❌ Incorrect. The AI actually moved to **{ai_next_state}**.")
+#     if predicted_state == ai_next_state:
+#         st.success(f"✅ Correct! The AI moved to **{ai_next_state}**.")
+#         st.session_state.current_state = ai_next_state
+#     else:
+#         st.error(f"❌ Incorrect. The AI actually moved to **{ai_next_state}**.")
  
-    # Option to override AI’s decision using Markov Chain
-    st.subheader("Override the AI's Decision!")
-    if st.button("Override AI's Decision"):
-    # Override the decision with a random choice from the current state’s transition probabilities
-        override_state = np.random.choice(states, p=next_state_probabilities)
-        st.success(f"✅ You've overridden the AI's decision! The new state is **{override_state}**.")
-        st.session_state.current_state = override_state
-    # Button to proceed to next room
-    if st.session_state.get("current_state") == "Overriding":
-        st.write("You have successfully cracked the AI's code and can move to the next room!")
-        if st.button("🔹 Proceed to the Next Room"):
-            st.session_state.current_room = "room_5"
-            st.rerun()
-            # Proceed to the next room
+#     # Option to override AI’s decision using Markov Chain
+#     st.subheader("Override the AI's Decision!")
+#     if st.button("Override AI's Decision"):
+#     # Override the decision with a random choice from the current state’s transition probabilities
+#         override_state = np.random.choice(states, p=next_state_probabilities)
+#         st.success(f"✅ You've overridden the AI's decision! The new state is **{override_state}**.")
+#         st.session_state.current_state = override_state
+#     # Button to proceed to next room
+#     if st.session_state.get("current_state") == "Overriding":
+#         st.write("You have successfully cracked the AI's code and can move to the next room!")
+#         if st.button("🔹 Proceed to the Next Room"):
+#             st.session_state.current_room = "room_5"
+#             st.rerun()
+#             # Proceed to the next room
 def room_3():
     # Set the background image using custom CSS
     st.markdown(
@@ -749,7 +749,7 @@ def room_3():
         if st.button("Submit Answer"):
             if abs(user_answer - st.session_state["prediction"]) < 1.0:  # Allowing small error margin
                 st.success("Correct! You may proceed to the next room.")
-                st.session_state.current_room = "room_4"  # Change room
+                st.session_state.current_room = "room_5"  # Change room
                 st.rerun()
             else:
                 st.error("Incorrect! Try again.")
