@@ -156,7 +156,7 @@ def room_1():
         ("What is the mean weight of the cargo (rounded to 2 decimal places)? (Use the 'Weight' column)", round(df["Weight"].mean(), 2)),
         ("How many outliers are there in the dataset? (Use the 'Weight' column)", sum((df["Weight"] < (df["Weight"].quantile(0.25) - 1.5 * (df["Weight"].quantile(0.75) - df["Weight"].quantile(0.25)))) | 
                           (df["Weight"] > (df["Weight"].quantile(0.75) + 1.5 * (df["Weight"].quantile(0.75) - df["Weight"].quantile(0.25)))))),
-        ("What is the median weight of the cargo? (Use the 'Weight' column)", df["Weight"].median())),
+        ("What is the median weight of the cargo? (Use the 'Weight' column)", df["Weight"].median()),
         ("What is the standard deviation of the cargo weight? (Use the 'Weight' column)", round(df["Weight"].std(), 2)),
         ("What is the 25th percentile of cargo weight? (Use the 'Weight' column)", df["Weight"].quantile(0.25)),
         ("What is the 75th percentile of cargo weight? (Use the 'Weight' column)", df["Weight"].quantile(0.75)),
