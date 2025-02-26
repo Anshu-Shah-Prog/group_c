@@ -209,7 +209,7 @@ def room_1():
     st.write("### 🕵️‍♂️ **Solve These Challenges:**")
     answers = []
     for i, (question, correct_answer) in enumerate(st.session_state.selected_questions):
-    answers.append(st.number_input(question, key=f"answer_{i}", step=0.01))
+        answers.append(st.number_input(question, key=f"answer_{i}", step=0.01))
 
     # Hint system
     st.write("### 💡 **Hint System**")
