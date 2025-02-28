@@ -452,7 +452,7 @@ def room_2():
 
        # Extracting the correct answer from the heatmap (largest delay value)
        correct_code = str(int(pivot_data.values.max()))  # Convert to string
-       user_code = st.text_input("Enter the final code from the heatmap:")
+       user_code = st.text_input("Enter the highest delay hours:")
 
        if user_code:
            if user_code == correct_code:
